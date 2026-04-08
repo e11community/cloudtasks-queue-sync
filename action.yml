@@ -1,0 +1,25 @@
+name: Cloud Tasks Queue Sync
+description: Sync Cloud Tasks queues with a queue.yaml file, deleting queues not defined in the file
+inputs:
+  project_id:
+    description: GCP project ID to iterate all Cloud Tasks queues in
+    required: true
+  queue_path:
+    description: Path to a queue.yaml file (same format as gcloud app deploy)
+    required: true
+  dry_run:
+    description: If true, do not perform any writes to GCP
+    required: false
+    default: 'false'
+  mock:
+    description: If true, make no calls to GCP at all and use preset mock queues
+    required: false
+    default: 'false'
+outputs:
+  remaining:
+    description: JSON array of queue names that exist in queue.yaml
+  deleted:
+    description: JSON array of queue names that were deleted (not in queue.yaml)
+runs:
+  using: node20
+  main: dist/index.js

@@ -1,0 +1,9 @@
+queue:
+  - name: alpha
+    rate: 1/s
+  - name: beta
+    rate: 5/s
+  - name: gamma
+    rate: 10/s
+  - name: delta
+    rate: 1/s
