@@ -4,7 +4,7 @@
   "description": "GitHub Action to sync Cloud Tasks queues with a queue.yaml file",
   "main": "dist/index.js",
   "scripts": {
-    "build": "ncc build src/index.ts -o dist --source-map --license licenses.txt",
+    "build": "ncc build src/index.ts -o dist --license licenses.txt",
     "test": "jest",
     "test:watch": "jest --watch",
     "format": "prettier --write 'src/**/*.ts'",
