@@ -27,3 +27,4 @@
 - Write tests for core logic with Jest
 - Create package.json scripts for running tests
 - mock data is one queue for each letter of the greek alphabet, spelled out as an English word, in all lowercase. Example: alpha, beta, gamma, delta.
+- Create `README.md`
