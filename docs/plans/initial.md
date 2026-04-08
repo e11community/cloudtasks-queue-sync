@@ -1,0 +1,29 @@
+- Create a custom GitHub Action in typescript with `@vercel/ncc`
+- Core logic must be independently testable without GitHub libraries or having to be invoked inside a GH workflow
+- Use `@google-cloud` libraries for cloud tasks
+- Core logic parameters:
+  - `queuePath` is path to a queue.yaml file, in same format as the deployable to
+    `gcloud app deploy` to deploy Cloud Tasks queues
+  - `projectId` is GCP projectId to iterate all Cloud Tasks queues in
+  - `dryRun` defaults to `false`. If `true`, do not do any writes to GCP
+  - `mock` defaults to `false`. If `true` makes no calls to GCP at all. Pretends a preset list of queues exist in an imaginary GCP project
+  - `verbose` defaults to `false`. If true, pretty prints the return value of the core logic in YAML. If either `mock` or `dryRun` is `true`, assume `verbose` is `true`
+- Find all queues specified by `queue[].name` in file at `queuePath`
+- Core logic output: `{remaining: string[], deleted: string[]}`
+  - `remaining` is all discovered queues that are mentioned in `queuePath` file
+  - `deleted`is all discovered queues NOT mentioned in `queuePath` file
+- If `dryRun` is `false` and `mock` is `false`, delete all queues in `deleted`
+- If a queue needs to be disabled and/or paused and/or purged before it can be deleted, then do so
+- actions.yaml inputs, mapping to core logic parameters:
+  - `dry_run` maps to `dryRun`
+  - `mock` maps to `mock`
+  - `project_id` maps to `projectId`
+  - `queue_path` maps to `queuePath`
+- actions.yaml outputs:
+  - `remaining` is a JSON array of the `remaining` property of the return value of the core logic
+  - `deleted` is a JSON array of the `deleted` property of the return value of the core logic
+- Core logic will use previously established ADC in env/filesystem for authN/Z
+- GHA will rely on previous steps in the workflow (ex. `google-github-actions/auth@v2`) for authN/Z
+- Write tests for core logic with Jest
+- Create package.json scripts for running tests
+- mock data is one queue for each letter of the greek alphabet, spelled out as an English word, in all lowercase. Example: alpha, beta, gamma, delta.
