@@ -8,7 +8,7 @@ The `default` queue is never deleted, as it is required by App Engine. If it exi
 
 | Input | Required | Default | Description |
 |-------|----------|---------|-------------|
-| `project_id` | Yes | | GCP project ID to scan for Cloud Tasks queues |
+| `project_id` | Unless `mock` | | GCP project ID to scan for Cloud Tasks queues |
 | `queue_path` | Yes | | Path to a `queue.yaml` file (same format as `gcloud app deploy`) |
 | `dry_run` | No | `false` | If `true`, no writes are made to GCP |
 | `mock` | No | `false` | If `true`, no GCP calls are made; uses a preset list of mock queues |
@@ -63,6 +63,27 @@ queue:
 ## Authentication
 
 This action uses Application Default Credentials. Use [google-github-actions/auth](https://github.com/google-github-actions/auth) in a prior step to authenticate.
+
+## CLI
+
+The sync logic can also be run directly from the command line:
+
+```bash
+tsx src/cli.ts --queue-path queue.yaml --project my-gcp-project --dry-run
+```
+
+### Options
+
+| Option | Required | Default | Description |
+|--------|----------|---------|-------------|
+| `--queue-path <path>` | Yes | | Path to a `queue.yaml` file |
+| `--project <id>` | Unless `--mock` | | GCP project ID |
+| `--dry-run` / `--no-dry-run` | No | `false` | Preview changes without deleting |
+| `--mock` / `--no-mock` | No | `false` | Use mock queues instead of GCP |
+| `--mock-queues <a,b,c>` | No | | Comma-separated mock queue names |
+| `--verbose` / `--no-verbose` | No | auto | Log output (auto-enabled with `--dry-run` or `--mock`) |
+
+Options accept both `--option=value` and `--option value` syntax.
 
 ## Development
 

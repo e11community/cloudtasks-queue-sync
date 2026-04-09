@@ -2,8 +2,8 @@ name: Cloud Tasks Queue Sync
 description: Sync Cloud Tasks queues with a queue.yaml file, deleting queues not defined in the file
 inputs:
   project_id:
-    description: GCP project ID to iterate all Cloud Tasks queues in
-    required: true
+    description: GCP project ID to iterate all Cloud Tasks queues in (required unless mock is true)
+    required: false
   queue_path:
     description: Path to a queue.yaml file (same format as gcloud app deploy)
     required: true

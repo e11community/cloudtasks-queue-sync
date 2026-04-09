@@ -5,7 +5,7 @@ import {dump} from 'js-yaml'
 
 export interface SyncParams {
   queuePath: string
-  projectId: string
+  projectId?: string
   dryRun?: boolean
   mock?: boolean
   mockQueues?: string[]
@@ -95,6 +95,10 @@ export async function sync(params: SyncParams): Promise<SyncResult> {
   const {queuePath: queueFilePath, projectId, dryRun = false, mock = false} = params
   const verbose = params.verbose ?? (dryRun || mock)
 
+  if (!mock && !projectId) {
+    throw new Error('projectId is required when mock is false')
+  }
+
   const desiredQueues = parseQueueYaml(queueFilePath)
 
   let discoveredQueues: string[]
@@ -102,7 +106,7 @@ export async function sync(params: SyncParams): Promise<SyncResult> {
     discoveredQueues = [...(params.mockQueues ?? MOCK_QUEUES)]
   } else {
     const client = new CloudTasksClient()
-    discoveredQueues = await listAllQueues(client, projectId)
+    discoveredQueues = await listAllQueues(client, projectId!)
   }
 
   const desiredSet = new Set(desiredQueues)
@@ -111,11 +115,11 @@ export async function sync(params: SyncParams): Promise<SyncResult> {
 
   if (!dryRun && !mock && deleted.length > 0) {
     const client = new CloudTasksClient()
-    await deleteQueues(client, projectId, deleted)
+    await deleteQueues(client, projectId!, deleted)
   }
 
   if (verbose) {
-    console.log(dump({remaining, deleted}, {flowLevel: 1}))
+    console.log(dump({remaining, deleted}, dryRun ? {} : {flowLevel: 1}))
   }
 
   return {remaining, deleted}
