@@ -1,0 +1,10 @@
+.claude
+docs
+.git
+.github
+.gitignore
+jest*
+node_modules
+.prettier*
+src
+tsconfig.json
