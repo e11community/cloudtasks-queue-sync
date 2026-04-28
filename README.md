@@ -90,5 +90,6 @@ Options accept both `--option=value` and `--option value` syntax.
 ```bash
 npm install
 npm test
-npm run build
+npm run all      # tsc + esbuild bundle for the action
+npm run rebuild  # clean reinstall + build + package
 ```
