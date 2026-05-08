@@ -1,5 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
+const logger_1 = require("./logger");
 const sync_1 = require("./sync");
 function parseArgs(argv) {
     const args = argv.slice(2);
@@ -82,6 +83,10 @@ Options:
 }
 async function main() {
     const opts = parseArgs(process.argv);
+    const logger = new logger_1.Logger();
+    if (opts.dryRun) {
+        logger.warn('Dry run mode: no queues will be deleted');
+    }
     const result = await (0, sync_1.sync)({
         queuePath: opts.queuePath,
         projectId: opts.projectId || undefined,

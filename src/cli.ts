@@ -1,3 +1,4 @@
+import {Logger} from './logger'
 import {sync} from './sync'
 
 interface CliOptions {
@@ -98,6 +99,10 @@ Options:
 
 async function main(): Promise<void> {
   const opts = parseArgs(process.argv)
+  const logger = new Logger()
+  if (opts.dryRun) {
+    logger.warn('Dry run mode: no queues will be deleted')
+  }
   const result = await sync({
     queuePath: opts.queuePath,
     projectId: opts.projectId || undefined,
