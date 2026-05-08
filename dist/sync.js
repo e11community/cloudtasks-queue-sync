@@ -41,9 +41,9 @@ function parseQueueYaml(filePath) {
 }
 async function listAllQueues(client, projectId) {
     const queueNames = [];
-    for await (const location of client.listLocationsAsync({ name: `projects/${projectId}` })) {
+    for await (const location of client.listLocationsAsync({ name: `projects/${projectId}` }, { autoPaginate: false })) {
         const locationName = location.name;
-        for await (const queue of client.listQueuesAsync({ parent: locationName })) {
+        for await (const queue of client.listQueuesAsync({ parent: locationName }, { autoPaginate: false })) {
             const fullName = queue.name;
             const shortName = fullName.split('/').pop();
             queueNames.push(shortName);

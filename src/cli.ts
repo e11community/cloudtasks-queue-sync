@@ -80,18 +80,20 @@ function parseArgs(argv: string[]): CliOptions {
 }
 
 function printUsage(): void {
-  console.log(`
+  console.log(
+    `
 Usage: tsx src/cli.ts [options]
 
 Options:
   --queue-path <path>        Path to queue.yaml file (required)
-  --project <id>          GCP project ID (required unless --mock)
+  --project <id>             GCP project ID (required unless --mock)
   --dry-run / --no-dry-run   Preview changes without deleting (default: false)
   --mock / --no-mock         Use mock queues instead of GCP (default: false)
   --mock-queues <a,b,c>      Comma-separated mock queue names
   --verbose / --no-verbose   Log output (default: auto-enabled with --dry-run or --mock)
   --help                     Show this help message
-`.trim())
+`.trim(),
+  )
 }
 
 async function main(): Promise<void> {

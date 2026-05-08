@@ -72,7 +72,7 @@ Usage: tsx src/cli.ts [options]
 
 Options:
   --queue-path <path>        Path to queue.yaml file (required)
-  --project <id>          GCP project ID (required unless --mock)
+  --project <id>             GCP project ID (required unless --mock)
   --dry-run / --no-dry-run   Preview changes without deleting (default: false)
   --mock / --no-mock         Use mock queues instead of GCP (default: false)
   --mock-queues <a,b,c>      Comma-separated mock queue names
