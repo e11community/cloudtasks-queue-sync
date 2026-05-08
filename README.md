@@ -85,6 +85,8 @@ tsx src/cli.ts --queue-path queue.yaml --project my-gcp-project --dry-run
 
 Options accept both `--option=value` and `--option value` syntax.
 
+Set the `NO_COLOR` environment variable to suppress ANSI color codes in CLI output.
+
 ## Development
 
 ```bash
